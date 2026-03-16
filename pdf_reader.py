@@ -52,14 +52,6 @@ def extract_text_without_watermark(page):
             continue
         for line in block["lines"]:
             for span in line["spans"]:
-                if span["size"] > 40:
-                    continue
-                color = span["color"]
-                r = (color >> 16) & 0xFF
-                g = (color >> 8) & 0xFF
-                b = color & 0xFF
-                if r > 200 and g > 200 and b > 200:
-                    continue
                 if abs(line["dir"][1]) > 0.1:
                     continue
                 text = span["text"].replace("\u200b", "")
@@ -100,7 +92,7 @@ def table_dict(table):
         dict[key] = value
     return dict
 
-file_path = r"C:\Users\D919LBLR\Desktop\Security_Notice\pdf\Partner Security Bulletin_ NVIDIA Triton Inference Server - March 2026 v2 1.pdf"
+file_path = input("Enter PDF file path: ")
 
 pdf = pdf_reader(file_path)
 page_list = read_pages(pdf)
@@ -117,5 +109,3 @@ for key, value in feature_dict.items():
     for k, v in value.items():
         print(f"{k}: {v}")
     print("}\n")
-
-print(entire_text)
